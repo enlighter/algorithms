@@ -16,12 +16,15 @@ def quicksort(sort_list, start, end):
 	greater_than_pivot_start = start + 1
 
 	for read in range(start+1, end):
-		if sort_list[read] < pivot:
+		if (sort_list[read] < pivot):
 			# debug:
 			print("%d < %d" %(sort_list[read], pivot))
-			sort_list[greater_than_pivot_start], sort_list[read] = sort_list[read], sort_list[greater_than_pivot_start]
-			# debug:
-			print(sort_list)
+
+			if read != greater_than_pivot_start:
+				# this condition is imposed to avoid redundant swaps
+				sort_list[greater_than_pivot_start], sort_list[read] = sort_list[read], sort_list[greater_than_pivot_start]
+				# debug:
+				print(sort_list)
 			greater_than_pivot_start += 1
 
 	# debug:
