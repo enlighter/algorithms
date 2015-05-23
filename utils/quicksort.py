@@ -1,53 +1,16 @@
-def quicksort_(sort_list, start, end):
-	''' sort the list sort_list[start:end] '''
+'''
+ 	__author__: "Sushovan Mandal"
+    __license__: "MIT license"
+    __email__: "mandal.sushovan92@gmail.com"
+'''
 
-	# debug:
-	print("start=%d, end=%d" %(start,end))
-	print(sort_list[start:end+1])
+from random import randrange
 
-	if start == end:
-		# debug:
-		print("returning without any processing")
-		return sort_list
-
-	#Todo: here the choose_pivot method needs to be called
-	pivot = sort_list[start]
-	# debug:
-	print("pivot = %d" %pivot)
-	greater_than_pivot_start = start + 1
-
-	for read in range(start+1, end+1):
-		if (sort_list[read] < pivot):
-			# debug:
-			print("%d < %d" %(sort_list[read], pivot))
-
-			if read != greater_than_pivot_start:
-				# this condition is imposed to avoid redundant swaps
-				sort_list[greater_than_pivot_start], sort_list[read] = sort_list[read], sort_list[greater_than_pivot_start]
-				# debug:
-				print(sort_list)
-			greater_than_pivot_start += 1
-
-	# debug:
-	print("after processing: ",sort_list)
-	sort_list[start], sort_list[greater_than_pivot_start-1] = sort_list[greater_than_pivot_start-1], sort_list[start]
-	# debug:
-	print("after correcting pivot position: ",sort_list)
-
-	greater_than_pivot_start -= 1
-	if greater_than_pivot_start > start:
-		sort_list = quicksort_(sort_list, start, greater_than_pivot_start-1)
-	if greater_than_pivot_start < end:
-		sort_list = quicksort_(sort_list, greater_than_pivot_start+1, end)
-
-	return sort_list
-
-def _choose_pivot_(sort_list, start, end):
-	''' method to choose an pivot for efficient
-	quicksort implementation '''
 
 class quicksort(object):
 	'''
+	This is a non-instantiable base class
+
 	This quicksort class sorts the
 	entire list 'to_sort', if you want
 	to sort a part of the list then pass
@@ -57,8 +20,9 @@ class quicksort(object):
 	def __init__(self, to_sort):
 		self.sorted = to_sort
 		self.last_pos = len(self.sorted) - 1
-		if self.last_pos > 0:
-			self._process_(0, self.last_pos)
+		# Todo: in sub-class:-
+		# if self.last_pos > 0:
+		# 	self._process_(0, self.last_pos)
 
 	def _process_(self, beg, end):
 		pass
@@ -70,7 +34,9 @@ class quicksort(object):
 		greater_than_pivot_start = beg + 1
 
 		for read in range(beg+1, end+1):
-			if (self.sorted[read] < pivot):
+			#debug:
+			print("reading %d"%read)
+			if (self.sorted[read] <= pivot):
 				# debug:
 				print("%d < %d" %(self.sorted[read], pivot))
 
@@ -87,10 +53,34 @@ class quicksort(object):
 		# debug:
 		print("after correcting pivot position: ",self.sorted)
 
+		# greater_than_pivot-1 is the position of the pivot
+		# element by now
 		return greater_than_pivot_start-1
 
+class randomized_quicksort(quicksort):
+	# Todo: optimization for when there is repitition of elements
+	def __init__(self, to_sort):
+		quicksort.__init__(self,to_sort)
+		self._process_(0, self.last_pos)
+
+	def _process_(self, beg, end):
+		if beg == end:
+			# debug:
+			print("returning without any processing")
+		else:
+			pivot = randrange(beg,end+1)
+			self.sorted[beg], self.sorted[pivot] = self.sorted[pivot],self.sorted[beg]
+			pivot = self._partition_(beg,end)
+			if pivot > beg:
+				self._process_(beg, pivot-1)
+			if pivot < end:
+				self._process_(pivot+1, end)
+
+
+
 if __name__ == "__main__":
-	to_sort = [5,1,3,9,4,7,12,6]
-	max_element = len(to_sort) - 1
-	sorted = quicksort_(to_sort,0,max_element)
-	print(sorted)
+	to_sort = [5,1,3,9,4,7,12,6,15,87,2,99,45,8,5]
+	# max_element = len(to_sort) - 1
+	# sorted = quicksort_(to_sort,0,max_element)
+	sort = randomized_quicksort(to_sort)
+	print(sort.sorted)

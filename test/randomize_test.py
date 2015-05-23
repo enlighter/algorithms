@@ -19,7 +19,7 @@ def _digit_average(num,no_of_digits):
 def randrange_test():
     print("pseudo_random:")
     for i in range(0,10):
-        num = randrange(1,10)
+        num = randrange(1,11)
         print(num)
 
 def sys_random_test():
