@@ -19,6 +19,12 @@ class quicksort(object):
 	list to be sorted
 	'''
 	def __init__(self, to_sort):
+		if not type(to_sort) == list:
+			raise ValueError("'to_sort' needs to be a 'list' type object")
+		else:
+			for n in to_sort:
+				if not type(n) == int:
+					raise ValueError("This class only sorts 'int' type objects")
 		self.sorted = to_sort
 		self.last_pos = len(self.sorted) - 1
 		# Todo: in sub-class:-
@@ -58,6 +64,12 @@ class quicksort(object):
 		# element by now
 		return greater_than_pivot_start-1
 
+	def __repr__(self):
+		return "quicksort.quicksort([])"
+
+	def __str__(self):
+		return "Class<quicksort>"
+
 class randomized_quicksort(quicksort):
 	# Todo: optimization for when there is repitition of elements
 	def __init__(self, to_sort):
@@ -78,11 +90,16 @@ class randomized_quicksort(quicksort):
 			if pivot < end:
 				self._process_(pivot+1, end)
 
+	def __repr__(self):
+		return "quicksort.randomized_quicksort([])"
+
+	def __str__(self):
+		return "Class<randomized_quicksort>"
+
 
 
 if __name__ == "__main__":
 	to_sort = [5,1,3,9,4,7,12,6,15,87,2,99,45,8,5]
-	# max_element = len(to_sort) - 1
-	# sorted = quicksort_(to_sort,0,max_element)
+	# print(randomized_quicksort)
 	sort = randomized_quicksort(to_sort)
 	print(sort.sorted)
