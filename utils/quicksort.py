@@ -31,28 +31,28 @@ class quicksort(object):
 	def _partition_(self, beg, end):
 		pivot = self.sorted[beg]
 		# debug:
-		print("pivot = %d" %pivot)
+		# print("pivot = %d" %pivot)
 		greater_than_pivot_start = beg + 1
 
 		for read in range(beg+1, end+1):
 			#debug:
-			print("reading %d"%read)
+			# print("reading %d"%read)
 			if (self.sorted[read] <= pivot):
 				# debug:
-				print("%d < %d" %(self.sorted[read], pivot))
+				# print("%d < %d" %(self.sorted[read], pivot))
 
 				if read != greater_than_pivot_start:
 					# this condition is imposed to avoid redundant swaps
 					self.sorted[greater_than_pivot_start], self.sorted[read] = self.sorted[read], self.sorted[greater_than_pivot_start]
 					# debug:
-					print(self.sorted)
+					# print(self.sorted)
 				greater_than_pivot_start += 1
 
 		# debug:
-		print("after processing: ",self.sorted)
+		# print("after processing: ",self.sorted)
 		self.sorted[beg], self.sorted[greater_than_pivot_start-1] = self.sorted[greater_than_pivot_start-1], self.sorted[beg]
 		# debug:
-		print("after correcting pivot position: ",self.sorted)
+		# print("after correcting pivot position: ",self.sorted)
 
 		# greater_than_pivot-1 is the position of the pivot
 		# element by now
@@ -67,7 +67,8 @@ class randomized_quicksort(quicksort):
 	def _process_(self, beg, end):
 		if beg == end:
 			# debug:
-			print("returning without any processing")
+			# print("returning without any processing")
+			pass
 		else:
 			pivot = randrange(beg,end+1)
 			self.sorted[beg], self.sorted[pivot] = self.sorted[pivot],self.sorted[beg]
