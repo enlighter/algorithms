@@ -6,6 +6,7 @@
 '''
 
 from random import randrange
+from time import process_time
 
 
 class quicksort(object):
@@ -73,8 +74,11 @@ class quicksort(object):
 class randomized_quicksort(quicksort):
 	# Todo: optimization for when there is repitition of elements
 	def __init__(self, to_sort):
+		start_time = process_time()
 		quicksort.__init__(self,to_sort)
 		self._process_(0, self.last_pos)
+		elapsed_time = process_time() - start_time
+		print("elapsed time = %f",elapsed_time)
 
 	def _process_(self, beg, end):
 		if beg == end:
