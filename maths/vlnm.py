@@ -20,9 +20,17 @@ if cur_version < req_version:
 
 from time import process_time
 
-# def _listize_number_(num):
-# 	return_list = []
-# 	while
+def _listize_number_(num):
+	'''
+	converts an integer into a list
+	containing the digits of the integer
+	in reverse order
+	'''
+	return_list = []
+	while not num == 0:
+		return_list.append(num%10)
+		num = int(num/10)
+	return return_list
 
 def multiply(num1=0, num2=0):
 	if (not isinstance(num1, int)) or (not isinstance(num2,int)):
@@ -37,12 +45,10 @@ def multiply(num1=0, num2=0):
 	print("%s of length %d" %(operand1,len1))
 	print("%s of length %d" %(operand2,len2))
 
-	temp = num1
-	num1_list = []
-	while (not temp==0):
-		num1_list.append(temp%10)
-		temp = int(temp/10)
+	num1_list = _listize_number_(num1)
+	num2_list = _listize_number_(num2)
 	print(num1_list)
+	print(num2_list)
 
 	if len1 <= len2:
 		# operand1 is the shorter string
