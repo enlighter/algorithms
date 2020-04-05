@@ -82,26 +82,28 @@ class LinkedList(object):
 
     def delete(self, value):
         """Delete the first node with a given value."""
-        # if self.head:
-        #     if self.head.value == value:
-        #         self.head = self.head.next
-        #         return
-        #     current = self.head
-        #     while current.next:
-        #         if current.next.value == value:
-        #             current.next = current.next.next
-        #             return
-        #         current = current.next
-        current = self.head
-        previous = None
-        while current.value != value and current.next:
-            previous = current
-            current = current.next
-        if current.value == value:
-            if previous:
-                previous.next = current.next
-            else:
-                self.head = current.next
+        #### Udacity version
+        # current = self.head
+        # previous = None
+        # while current.value != value and current.next:
+        #     previous = current
+        #     current = current.next
+        # if current.value == value:
+        #     if previous:
+        #         previous.next = current.next
+        #     else:
+        #         self.head = current.next
+        #### My version
+        if self.head:
+            if self.head.value == value:
+                self.head = self.head.next
+                return
+            current = self.head
+            while current.next:
+                if current.next.value == value:
+                    current.next = current.next.next
+                    return
+                current = current.next
 
 
 if __name__ == '__main__':
@@ -136,3 +138,6 @@ if __name__ == '__main__':
     print(ll.get_position(2).value)
     # Should print 3 now
     print(ll.get_position(3).value)
+
+    ll2 = LinkedList()
+    ll2.delete(1)
