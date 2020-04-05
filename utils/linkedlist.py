@@ -21,6 +21,7 @@ class LinkedList(object):
         """Get an element from a particular position.
         Assume the first position is "1".
         Return "None" if position is not in the list."""
+        #### My version
         # current_position = 0
         # if self.head:
         #     current = self.head
@@ -35,6 +36,7 @@ class LinkedList(object):
         #     return current
         # else:
         #     return None
+        #### Udacity version
         counter = 1
         current = self.head
         if position < 1:
@@ -51,14 +53,15 @@ class LinkedList(object):
         Assume the first position is "1".
         Inserting at position 3 means between
         the 2nd and 3rd elements."""
+        #### My version
         # if self.head:
         #     if position == 1:
-        #         new_element.next = self.head.next
+        #         new_element.next = self.head
         #         self.head = new_element
         #         return
         #     current = self.head
         #     current_position = 1
-        #     while current.next:
+        #     while current.next:  # this may lead to logical error
         #         if current_position == position - 1:
         #             new_element.next = current.next
         #             current.next = new_element
@@ -67,6 +70,7 @@ class LinkedList(object):
         #         current_position += 1
         # else:
         #     self.head = new_element
+        #### Udacity version
         counter = 1
         current = self.head
         if position > 1:
