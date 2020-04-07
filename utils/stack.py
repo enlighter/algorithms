@@ -4,7 +4,7 @@ except ModuleNotFoundError as e:
     from linkedlist import LinkedList, Element
 
 
-class Stack(object):
+class StackLL(object):
     def __init__(self, top=None):
         self.ll = LinkedList(top)
 
@@ -17,7 +17,26 @@ class Stack(object):
         return self.ll.delete_first()
 
 
-print(__name__)
+class StackList:
+    def __init__(self, top=None):
+        if top is not None:
+            self.array = [top]
+        else:
+            self.array = []
+
+    def push(self, new_element):
+        """Push (add) a new element onto the top of the stack"""
+        self.array.append(new_element)
+
+    def pop(self):
+        """Pop (remove) the first element off the top of the stack and return it"""
+        try:
+            return self.array.pop()
+        except IndexError as e:
+            return None
+
+
+Stack = StackList
 if __name__ == '__main__':
     # Test cases
     # Set up some Elements
