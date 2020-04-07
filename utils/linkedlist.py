@@ -116,13 +116,11 @@ class LinkedList(object):
 
     def delete_first(self):
         """Delete the first (head) element in the LinkedList as return it"""
+        deleted = self.head
         if self.head:
-            ret = self.head
-            self.head = ret.next
-            ret.next = None
-            return ret
-        else:
-            return None
+            self.head = self.head.next
+            deleted.next = None
+        return deleted
 
 
 if __name__ == '__main__':
