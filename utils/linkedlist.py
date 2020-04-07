@@ -109,6 +109,21 @@ class LinkedList(object):
                     return
                 current = current.next
 
+    def insert_first(self, new_element):
+        """Insert new element as the head of the LinkedList"""
+        new_element.next = self.head
+        self.head = new_element
+
+    def delete_first(self):
+        """Delete the first (head) element in the LinkedList as return it"""
+        if self.head:
+            ret = self.head
+            self.head = ret.next
+            ret.next = None
+            return ret
+        else:
+            return None
+
 
 if __name__ == '__main__':
     # Test cases
