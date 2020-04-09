@@ -12,14 +12,16 @@ def bubble_sort(array: list, desc: bool = False):
         # print('Looping, comparisons=', n-1)
         new_n = 0
         for i in range(n-1):
-            if array[i] > array[i+1]:
-                _swap(i, i+1)
-                new_n = i+1
+            if not desc:
+                if array[i] > array[i+1]:
+                    _swap(i, i+1)
+                    new_n = i+1
+            else:
+                if array[i] < array[i+1]:
+                    _swap(i, i+1)
+                    new_n = i+1
         n = new_n
         # print(array)
-
-    if desc:
-        array = array[::-1]
 
     return array
 
@@ -27,4 +29,6 @@ def bubble_sort(array: list, desc: bool = False):
 if __name__ == '__main__':
     test_list = [3, 6, 8, 24, 7, 11, 16]
     sorted_list = bubble_sort(test_list)
+    print(sorted_list)
+    sorted_list = bubble_sort(test_list, desc=True)
     print(sorted_list)
