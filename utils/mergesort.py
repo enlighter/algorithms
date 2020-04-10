@@ -69,6 +69,7 @@ def bottom_up_collect_merge_sort(array, comparison_operator):
 
 
 def merge_sort(array, approach='top_down', desc=False):
+    array = array.copy()
     if desc:
         comparison_operator = greater_than_equal_to_operator
     else:
@@ -80,6 +81,7 @@ def merge_sort(array, approach='top_down', desc=False):
         bottom_up_collect_merge_sort(array, comparison_operator)
     else:
         raise NotImplementedError('{} type of merge sort not implemented.'.format(approach))
+    return array
 
 
 if __name__ == '__main__':
@@ -88,7 +90,5 @@ if __name__ == '__main__':
     test_list = [3, 6, 8, 24, 7, 11, 16]
     # top_down_split_merge_sort(test_list, 0, 7, True)
     # bottom_up_collect_merge_sort(test_list, True)
-    merge_sort(test_list)
-    print(test_list)
-    merge_sort(test_list, desc=True)
-    print(test_list)
+    print(merge_sort(test_list))
+    print(merge_sort(test_list, desc=True))
