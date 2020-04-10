@@ -1,6 +1,14 @@
+from operator import lt as less_than_operator
+from operator import gt as greater_than_operator
+
+
 def bubble_sort(array: list, desc: bool = False):
     n = len(array)
     array = array.copy()
+    if desc:
+        comparison_operator = less_than_operator
+    else:
+        comparison_operator = greater_than_operator
 
     def _swap(pos1, pos2):
         t = array[pos1]
@@ -12,14 +20,9 @@ def bubble_sort(array: list, desc: bool = False):
         # print('Looping, comparisons=', n-1)
         new_n = 0
         for i in range(n-1):
-            if not desc:
-                if array[i] > array[i+1]:
-                    _swap(i, i+1)
-                    new_n = i+1
-            else:
-                if array[i] < array[i+1]:
-                    _swap(i, i+1)
-                    new_n = i+1
+            if comparison_operator(array[i], array[i+1]):
+                _swap(i, i+1)
+                new_n = i+1
         n = new_n
         # print(array)
 

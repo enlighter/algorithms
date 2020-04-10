@@ -1,4 +1,5 @@
-import operator
+from operator import le as less_than_equal_to_operator
+from operator import ge as greater_than_equal_to_operator
 
 
 def top_down_merge_sorted(sorted_array_1, sorted_array_2, comparison_operator):
@@ -39,9 +40,9 @@ def top_down_split_merge_sort(array, beg, end, desc=False):
         return
 
     if desc:
-        comparison_operator = operator.ge
+        comparison_operator = greater_than_equal_to_operator
     else:
-        comparison_operator = operator.le
+        comparison_operator = less_than_equal_to_operator
 
     mid = (beg + end) // 2
     top_down_split_merge_sort(array, beg, mid, desc)
@@ -52,7 +53,7 @@ def top_down_split_merge_sort(array, beg, end, desc=False):
 
 if __name__ == '__main__':
     l1, l2 = [1, 3, 6, 7], [2, 4, 5]
-    print(top_down_merge_sorted(l1, l2, operator.le))
+    print(top_down_merge_sorted(l1, l2, less_than_equal_to_operator))
     test_list = [3, 6, 8, 24, 7, 11, 16]
     top_down_split_merge_sort(test_list, 0, 7, True)
     print(test_list)
