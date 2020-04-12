@@ -10,18 +10,12 @@ def bubble_sort(array: list, desc: bool = False):
     else:
         comparison_operator = greater_than_operator
 
-    def _swap(pos1, pos2):
-        t = array[pos1]
-        array[pos1] = array[pos2]
-        array[pos2] = t
-        return True
-
     while n > 1:
         # print('Looping, comparisons=', n-1)
         new_n = 0
         for i in range(n-1):
-            if comparison_operator(array[i], array[i+1]):
-                _swap(i, i+1)
+            if comparison_operator(array[i], array[i + 1]):
+                array[i], array[i + 1] = array[i + 1], array[i]
                 new_n = i+1
         n = new_n
         # print(array)

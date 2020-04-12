@@ -45,9 +45,7 @@ def top_down_split_merge_sort(array, beg, end, comparison_operator):
     # Effective time reduction optimization: for duo, simply compare and swap
     if len(array[beg:end]) == 2:
         if not comparison_operator(array[beg], array[end - 1]):
-            temp = array[end - 1]
-            array[end - 1] = array[beg]
-            array[beg] = temp
+            array[beg], array[end - 1] = array[end - 1], array[beg]
             return
         else:
             return
