@@ -1,5 +1,9 @@
 from operator import le as less_than_equal_to_operator
 from operator import ge as greater_than_equal_to_operator
+try:
+    from .insertionsort import insertion_sort
+except ModuleNotFoundError as e:
+    from insertionsort import insertion_sort
 
 
 def _merge_sorted(sorted_array_1, sorted_array_2, comparison_operator):
@@ -38,12 +42,25 @@ def top_down_split_merge_sort(array, beg, end, comparison_operator):
     beg is inclusive and end is exclusive, so array[beg:end] is operative slice."""
     if len(array[beg:end]) <= 1:
         return
+    # Effective time reduction optimization: for duo, simply compare and swap
+    if len(array[beg:end]) == 2:
+        if not comparison_operator(array[beg], array[end - 1]):
+            temp = array[end - 1]
+            array[end - 1] = array[beg]
+            array[beg] = temp
+            return
+        else:
+            return
 
     mid = (beg + end) // 2
     top_down_split_merge_sort(array, beg, mid, comparison_operator)
     top_down_split_merge_sort(array, mid, end, comparison_operator)
-    sorted_merge = _merge_sorted(array[beg:mid], array[mid:end], comparison_operator)
-    array[beg:end] = sorted_merge
+    # Effective time reduction optimization: if already sorted, skip merge step
+    if comparison_operator(array[mid - 1], array[mid]):
+        return
+    else:
+        sorted_merge = _merge_sorted(array[beg:mid], array[mid:end], comparison_operator)
+        array[beg:end] = sorted_merge
 
 
 def bottom_up_collect_merge_sort(array, comparison_operator):
@@ -64,11 +81,19 @@ def bottom_up_collect_merge_sort(array, comparison_operator):
             sec2_end = min(i + 2 * width, array_len)
             if sec2_beg == sec2_end:
                 continue
-            sorted_merge = _merge_sorted(array[sec1_beg:sec2_beg], array[sec2_beg:sec2_end], comparison_operator)
-            array[sec1_beg:sec2_end] = sorted_merge
+            # Effective time reduction optimization: if already sorted, skip merge step
+            if comparison_operator(array[sec2_beg - 1], array[sec2_beg]):
+                continue
+            else:
+                sorted_merge = _merge_sorted(array[sec1_beg:sec2_beg], array[sec2_beg:sec2_end], comparison_operator)
+                array[sec1_beg:sec2_end] = sorted_merge
 
 
 def merge_sort(array, approach='top_down', desc=False):
+    # Effective time reduction optimization: for small arrays invoke insertionsort
+    if len(array) <= 52:
+        return insertion_sort(array, desc)
+
     array = array.copy()
     if desc:
         comparison_operator = greater_than_equal_to_operator

@@ -3,7 +3,7 @@ import random
 from utils.insertionsort import insertion_sort
 from utils.mergesort import merge_sort
 
-test_list = random.sample(range(10000), 1000)
+test_list = random.sample(range(10000), 52)
 start = timer()
 for _ in range(10000):
     _ = insertion_sort(test_list)
