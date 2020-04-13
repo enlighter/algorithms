@@ -6,6 +6,7 @@
 '''
 
 from random import randrange
+import time
 
 
 class QuickSort:
@@ -66,7 +67,8 @@ class RandomizedQuickSort(QuickSort):
 	# Todo: optimization for when there is repitition of elements
 	def __init__(self, to_sort):
 		QuickSort.__init__(self, to_sort)
-		self._process(0, self.last_pos)
+		if self.last_pos >= 1:
+			self._process(0, self.last_pos)
 
 	def _process(self, lo, hi):
 		if lo == hi:
@@ -89,8 +91,53 @@ class RandomizedQuickSort(QuickSort):
 		return self.__repr__()
 
 
+def quick_sort(array, lo, hi):
+	# print('array[{}:{}]'.format(lo, hi))
+	if lo < hi:
+		p = partition(array, lo, hi)
+		# print('partition at', p)
+		quick_sort(array, lo, p)
+		quick_sort(array, p + 1, hi)
+
+
+def partition(array, lo, hi):
+	# print(array[lo:hi+1])
+	mid = (lo + hi) // 2
+	# pivot = array[mid]
+	# Optimization: choose the median of lo, mid and hi as pivot
+	if array[mid] < array[lo]:
+		array[lo], array[mid] = array[mid], array[lo]
+	if array[hi] < array[lo]:
+		array[lo], array[hi] = array[hi], array[lo]
+	if array[mid] < array[hi]:
+		array[mid], array[hi] = array[hi], array[mid]
+	pivot = array[hi]
+	# print('pivot:', pivot)
+
+	i, j = lo - 1, hi + 1
+	while True:
+		while True:
+			i += 1
+			# print('i:', i)
+			if array[i] >= pivot:
+				break
+		while True:
+			j -= 1
+			# print('j:', j)
+			if array[j] <= pivot:
+				break
+		if i >= j:
+			return j
+		# print('swapping', i, j)
+		array[i], array[j] = array[j], array[i]
+		# print(array[lo:hi+1])
+
+
 if __name__ == "__main__":
-	test_list = [5, 1, 3, 9, 4, 7, 12, 6, 15, 87, 2, 99, 45, 8, 5]
+	# test_list = [5, 1, 3, 9, 4, 7, 12, 6, 15, 87, 2, 99, 45, 8, 5]
+	test_list = [1, 2, 3, 4, 5, 6, 7, 8, 9, 12, 15, 45, 87, 99]
 	# print(randomized_quicksort)
-	sort = RandomizedQuickSort(test_list)
-	print(sort.sorted)
+	# sort = RandomizedQuickSort(test_list)
+	# print(sort.sorted)
+	quick_sort(test_list, 0, len(test_list) - 1)
+	print(test_list)
