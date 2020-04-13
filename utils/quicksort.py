@@ -6,7 +6,10 @@
 '''
 
 from random import randrange
-import time
+try:
+    from .insertionsort import insertion_sort
+except ModuleNotFoundError as e:
+    from insertionsort import insertion_sort
 
 
 class QuickSort:
@@ -91,16 +94,16 @@ class RandomizedQuickSort(QuickSort):
 		return self.__repr__()
 
 
-def quick_sort(array, lo, hi):
+def _quick_sort(array, lo, hi):
 	# print('array[{}:{}]'.format(lo, hi))
 	if lo < hi:
-		p = partition(array, lo, hi)
+		p = hoare_partition(array, lo, hi)
 		# print('partition at', p)
-		quick_sort(array, lo, p)
-		quick_sort(array, p + 1, hi)
+		_quick_sort(array, lo, p)
+		_quick_sort(array, p + 1, hi)
 
 
-def partition(array, lo, hi):
+def hoare_partition(array, lo, hi):
 	# print(array[lo:hi+1])
 	mid = (lo + hi) // 2
 	# pivot = array[mid]
@@ -133,11 +136,25 @@ def partition(array, lo, hi):
 		# print(array[lo:hi+1])
 
 
+def quick_sort(array, desc=False):
+	array_size = len(array)
+	# print(array_size)
+	if 16 > array_size > 1:
+		return insertion_sort(array, desc)
+	array = array.copy()
+	if array_size <= 1:
+		return array
+	_quick_sort(array, 0, array_size - 1)
+	if not desc:
+		return array
+	else:
+		return array[::-1]
+
+
 if __name__ == "__main__":
-	# test_list = [5, 1, 3, 9, 4, 7, 12, 6, 15, 87, 2, 99, 45, 8, 5]
-	test_list = [1, 2, 3, 4, 5, 6, 7, 8, 9, 12, 15, 45, 87, 99]
+	test_list = [5, 1, 3, 9, 4, 7, 12, 6, 15, 87, 2, 99, 45, 8, 5, 10, 13, 16, 18, 20]
+	# test_list = [1, 2, 3, 4, 5, 6, 7, 8, 9, 12, 15, 45, 87, 99]
 	# print(randomized_quicksort)
 	# sort = RandomizedQuickSort(test_list)
 	# print(sort.sorted)
-	quick_sort(test_list, 0, len(test_list) - 1)
-	print(test_list)
+	print(quick_sort(test_list, desc=True))
