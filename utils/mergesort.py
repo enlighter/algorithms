@@ -89,7 +89,7 @@ def bottom_up_collect_merge_sort(array, comparison_operator):
 
 def merge_sort(array, approach='top_down', desc=False):
     # Effective time reduction optimization: for small arrays invoke insertionsort
-    if len(array) <= 52:
+    if len(array) <= 43:
         return insertion_sort(array, desc)
 
     array = array.copy()
