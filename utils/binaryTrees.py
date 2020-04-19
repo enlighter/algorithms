@@ -82,6 +82,65 @@ class BinaryFreeTree:
         return traversal
 
 
+class BST(object):
+    def __init__(self, root):
+        self.root = Node(root)
+
+    def insert(self, new_val):
+        current_node = self.root
+        while current_node is not None:
+            if new_val < current_node.value and current_node.left is None:
+                current_node.left = Node(new_val)
+                return
+            # else part
+            if current_node.right is None:
+                current_node.right = Node(new_val)
+                return
+            if new_val < current_node.value:
+                current_node = current_node.left
+            else:
+                current_node = current_node.right
+    ## Alternative
+    # def insert(self, new_val):
+    #     self.insert_helper(self.root, new_val)
+    #
+    # def insert_helper(self, current, new_val):
+    #     if current.value < new_val:
+    #         if current.right:
+    #             self.insert_helper(current.right, new_val)
+    #         else:
+    #             current.right = Node(new_val)
+    #     else:
+    #         if current.left:
+    #             self.insert_helper(current.left, new_val)
+    #         else:
+    #             current.left = Node(new_val)
+
+    def search(self, find_val):
+        current_node = self.root
+        while current_node is not None:
+            if current_node.value == find_val:
+                return True
+            if find_val < current_node.value:
+                current_node = current_node.left
+            else:
+                current_node = current_node.right
+        return False
+    ## Alternative
+    # def search(self, find_val):
+    #     return self.search_helper(self.root, find_val)
+    #
+    # def search_helper(self, current, find_val):
+    #     if current:
+    #         if current.value == find_val:
+    #             return True
+    #         elif current.value < find_val:
+    #             return self.search_helper(current.right, find_val)
+    #         else:
+    #             return self.search_helper(current.left, find_val)
+    #     return False
+
+
 if __name__ == '__main__':
     # Set up tree
     tree = BinaryFreeTree(4)
@@ -101,3 +160,18 @@ if __name__ == '__main__':
     print('preorder traversal', tree.print_tree('preorder'))
     print('inorder traversal', tree.print_tree('inorder'))
     print('postorder traversal', tree.print_tree('postorder'))
+
+    # Set up BST
+    tree = BST(4)
+
+    # Insert elements
+    tree.insert(2)
+    tree.insert(1)
+    tree.insert(3)
+    tree.insert(5)
+
+    # Check search
+    # Should be True
+    print(tree.search(4))
+    # Should be False
+    print(tree.search(6))
