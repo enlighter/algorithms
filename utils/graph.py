@@ -43,17 +43,13 @@ class Graph:
         """Don't return a list of edge objects!
         Return a list of triples that looks like this:
         (Edge Value, From Node Value, To Node Value)"""
-        ret = []
-        for edge in self.edges:
-            ret.append((edge.value, edge.node_from.value, edge.node_to.value))
-        return ret
+        edge_list = []
+        for edge_object in self.edges:
+            edge = (edge_object.value, edge_object.node_from.value, edge_object.node_to.value)
+            edge_list.append(edge)
+        return edge_list
 
-    def __find_node(self, index):
-        for node in self.nodes:
-            if node.value == index:
-                return node
-
-    def __find_max_node(self):
+    def __find_max_node_index(self):
         max_node = None
         for node in self.nodes:
             if not max_node:
@@ -71,25 +67,14 @@ class Graph:
         Each section in the list will store a list
         of tuples that looks like this:
         (To Node, Edge Value)"""
-        ret = []
-        for i in range(self.__find_max_node() + 1):
-            node = self.__find_node(i)
-            if node is None:
-                # print('node no. {}: {}'.format(i, None))
-                ret.append(None)
-                continue
-            # print('node no. {}: {}'.format(i, node.value))
-            adjacents = []
-            for edge in node.edges:
-                if edge.node_to.value == node.value:
-                    # these are incoming edges not outgoing edges
-                    continue
-                adjacents.append((edge.node_to.value, edge.value))
-            if adjacents:
-                ret.append(adjacents)
+        max_index = self.__find_max_node_index()
+        adjacency_list = [None] * (max_index + 1)
+        for edge_object in self.edges:
+            if adjacency_list[edge_object.node_from.value]:
+                adjacency_list[edge_object.node_from.value].append((edge_object.node_to.value, edge_object.value))
             else:
-                ret.append(None)
-        return ret
+                adjacency_list[edge_object.node_from.value] = [(edge_object.node_to.value, edge_object.value)]
+        return adjacency_list
 
     def get_adjacency_matrix(self):
         """Return a matrix, or 2D list.
@@ -97,12 +82,11 @@ class Graph:
         column numbers represent to nodes.
         Store the edge values in each spot,
         and a 0 if no edge exists."""
-        matrix = []
-        for i in range(self.__find_max_node() + 1):
-            matrix.append([0 for j in range(self.__find_max_node() + 1)])
-        for edge in self.edges:
-            matrix[edge.node_from.value][edge.node_to.value] = edge.value
-        return matrix
+        max_index = self.__find_max_node_index()
+        adjacency_matrix = [[0 for i in range(max_index + 1)] for j in range(max_index + 1)]
+        for edge_object in self.edges:
+            adjacency_matrix[edge_object.node_from.value][edge_object.node_to.value] = edge_object.value
+        return adjacency_matrix
 
 
 if __name__ == '__main__':
